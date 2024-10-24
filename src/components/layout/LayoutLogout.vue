@@ -13,8 +13,6 @@ export default {
       await this.$auth.signOut();
       this.$router.push({ name: "login" }).catch(() => {});
       this.$root.$emit("Spinner::hide");
-      console.log();
-
     },
   },
 };
