@@ -8,37 +8,34 @@
 export default {
   data() {
     return {
-      visible: false,
+      visible: true,
     };
   },
   created() {
-    this.$root.$on("Spinner::show", this.alternarSpinner);
-    this.$root.$on("Spinner::hide", this.alternarSpinner);
-  },
-  methods: {
-    alternarSpinner() {
-      this.visible = !this.visible;
-    },
+    this.$root.$on("Spinner::show", () => {
+      this.visible = true;
+    });
+    this.$root.$on("Spinner::hide", () => {
+      this.visible = false;
+    });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/variables";
-
 .base-spinner {
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 100000;
+  z-index: 1000000;
   position: absolute;
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: $dark-medium;
-  color: $featured;
+  justify-content: center;
+  background-color: var(--dark-medium);
+  color: var(--featured);
 }
 </style>

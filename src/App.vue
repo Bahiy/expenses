@@ -1,26 +1,62 @@
 <template>
   <div id="app">
     <base-spinner />
-    <button @click="mostrarSpinner()">Mostrar Spinner</button>
-    <!-- <router-view /> -->
+    <div class="container-fluid" v-if="isLogged">
+      <div class="row">
+        <div class="col-2 navigation-sidebar">
+          <h1 class="app-title">Expenses</h1>
+          <layout-navigation />
+        </div>
+        <div class="col">
+          <router-view/>
+        </div>
+      </div>
+    </div>
+
+    <router-view v-else />
   </div>
 </template>
 
 <script>
-import BaseSpinner from "./components/global/BaseSpinner.vue";
+import BaseSpinner from "./components/global/BaseSpinner";
+import LayoutNavigation from "./components/layout/LayoutNavigation.vue";
+
 export default {
   name: "App",
-
   components: {
     BaseSpinner,
+    LayoutNavigation,
   },
+  data: () => ({ isLogged: false }),
+  mounted() {
+    this.$auth.onAuthStateChanged((user) => {
+      window.uid = user ? user.uid : null;
+      this.isLogged = !!user;
 
-  methods: {
-    mostrarSpinner() {
-      this.$root.$emit("Spinner::show");
-    },
+      this.$router
+        .push({ name: window.uid ? "home" : "login" })
+        .catch(() => {});
+
+      setTimeout(() => {
+        this.$root.$emit("Spinner::hide");
+      }, 300);
+    });
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+#app {
+  min-height: 100vh;
+  color: var(--light);
+  background-color: var(--darker);
+  .navigation-sidebar {
+    background-color: var(--dark-medium);
+    .app-title {
+      font-size: 1.6rem;
+      margin-top: 0.625rem;
+      text-align: center;
+    }
+  }
+}
+</style>
