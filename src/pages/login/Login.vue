@@ -5,25 +5,27 @@
         <h1 class="mb-0">Expenses</h1>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <input
-            type="email"
-            v-model="email"
-            autocomplete="email"
-            class="form-control"
-            placeholder="E-mail"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="password"
-            v-model="password"
-            autocomplete="current-password"
-            class="form-control"
-            placeholder="Senha"
-            required
-          />
+        <div class="inputs-login">
+          <div class="form-group">
+            <input
+              type="email"
+              v-model="email"
+              autocomplete="email"
+              class="form-control"
+              placeholder="E-mail"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              v-model="password"
+              autocomplete="current-password"
+              class="form-control"
+              placeholder="Senha"
+              required
+            />
+          </div>
         </div>
         <button class="btn btn-primary w-100" :disabled="loading">
           <template v-if="loading">
@@ -89,8 +91,18 @@ export default {
     font-size: 1.5rem;
   }
   .card {
-    width: 30%;
+    width: 25%;
     color: var(--darker);
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .inputs-login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
   }
 }
 .link {
