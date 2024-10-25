@@ -1,6 +1,6 @@
 <template>
   <button class="btn btn-logout" @click="logout()">
-    <i class="fa fa-power-off"></i>
+    <i class="fa fa-sign-out"></i>
     Sair
   </button>
 </template>
@@ -24,7 +24,7 @@ export default {
   cursor: pointer;
   color: var(--light);
   &:hover {
-    color: var(--featured);
+    color: #ac2121;
   }
 }
 </style>
