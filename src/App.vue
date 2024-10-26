@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <base-spinner />
+    <layout-notification />
     <div class="container-fluid" v-if="isLogged">
       <div class="row">
         <div class="col-2 navigation-sidebar">
@@ -8,7 +9,7 @@
           <layout-navigation />
         </div>
         <div class="col">
-          <router-view/>
+          <router-view />
         </div>
       </div>
     </div>
@@ -19,13 +20,15 @@
 
 <script>
 import BaseSpinner from "./components/global/BaseSpinner";
-import LayoutNavigation from "./components/layout/LayoutNavigation.vue";
+import LayoutNavigation from "./components/layout/LayoutNavigation";
+import LayoutNotification from "./components/layout/LayoutNotification";
 
 export default {
   name: "App",
   components: {
     BaseSpinner,
     LayoutNavigation,
+    LayoutNotification,
   },
   data: () => ({ isLogged: false }),
   mounted() {

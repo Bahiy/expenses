@@ -66,6 +66,22 @@ export default {
 
         console.log(res);
       } catch (err) {
+        let message = "";
+        switch (err.code) {
+          case "auth/too-many-requests":
+            message =
+              "Sua conta foi bloqueada devido a múltiplas tentativas de login incorretas. \n\nTente novamente mais tarde.";
+            break;
+
+          default:
+            message =
+              "Credenciais inválidas. \n\nSe você esqueceu sua senha, clique em 'Esqueci a senha' para redefini-la.";
+            break;
+        }
+        this.$root.$emit("Notification::show", {
+          type: "danger",
+          message: message,
+        });
         console.log(err);
       }
       this.loading = false;
