@@ -7,7 +7,7 @@
       <i class="fa fa-plus"></i> Novo Gasto
     </button>
 
-    <form @submit.prevent="submit()">
+    <form class="modal-form" @submit.prevent="submit()">
       <div
         class="modal fade"
         :class="{ show: showModal }"
@@ -16,20 +16,20 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLiveLabel">
-                Adicionar Gasto
-              </h1>
+              <h1 class="modal-title fs-4">Adicionar Gasto</h1>
               <button
                 @click="closeModal()"
                 type="button"
                 class="btn-close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body mb-3 mt-3 mx-2">
               <div class="row">
                 <div class="form-group col-8">
-                  <label for="">Descrição</label>
+                  <label for="description">Descrição</label>
                   <input
+                    id="description"
+                    placeholder="Insira a descrição"
                     type="text"
                     class="form-control"
                     required
@@ -37,13 +37,20 @@
                   />
                 </div>
                 <div class="form-group col-4">
-                  <label for="">Valor (R$)</label>
-                  <input
+                  <label for="money">Valor (R$)</label>
+                  <money
+                    id="money"
                     type="text"
                     class="form-control"
                     required
                     v-model="form.value"
-                  />
+                  ></money>
+                  <!-- <input
+                    type="text"
+                    class="form-control"
+                    required
+                    v-model="form.value"
+                  /> -->
                 </div>
                 <div
                   class="form-group mt-4 col-12 d-flex flex-column align-items-center"
@@ -78,13 +85,19 @@
             </div>
             <div class="modal-footer">
               <button
-                @click="closeModal(), resetForm()"
+                @click="closeModal()"
                 type="button"
                 class="btn btn-secondary"
               >
                 Fechar
               </button>
-              <button class="btn btn-primary">Incluir novo gasto</button>
+              <template v-if="loading">
+                <button class="btn btn-primary">
+                  Adicionando...
+                  <i class="fa fa-spinner fa-spin"></i>
+                </button>
+              </template>
+              <button v-else class="btn btn-primary">Incluir novo gasto</button>
             </div>
           </div>
         </div>
@@ -103,6 +116,7 @@
 export default {
   data: () => ({
     showModal: false,
+    loading: false,
     form: {
       receipt: null,
       description: "",
@@ -129,13 +143,13 @@ export default {
       this.form.receipt = event.target.files[0];
     },
     openFileDialog() {
-      this.$refs.input.value = null;
+      this.$refs.input.value = "";
       this.$refs.input.click();
     },
     async submit() {
+      this.loading = true;
       try {
         let url = "";
-        this.$root.$emit("Spinner::show");
         const ref = this.$database.ref(window.uid);
         const id = ref.push().key;
 
@@ -159,31 +173,47 @@ export default {
           console.log(payload);
 
           if (err) {
-            console.error(err);
+            this.$root.$emit("Notification::show", {
+              type: "danger",
+              message: "Não foi possível inserir o gasto, tente novamente.",
+            });
+            console.log(err);
           } else {
+            this.$root.$emit("Notification::show", {
+              type: "success",
+              message: "Gasto inserido com Sucesso!",
+            });
             this.closeModal();
           }
         });
       } catch (error) {
+        this.$root.$emit("Notification::show", {
+          type: "danger",
+          message: "Não foi possível inserir o gasto, tente novamente.",
+        });
         console.error(error);
       } finally {
-        this.$root.$emit("Spinner::hide");
         this.resetForm();
+        this.loading = false;
+      }
+    },
+    resetForm() {
+      for (let value in this.form) {
+        this.form[value] = "";
       }
     },
     closeModal() {
       this.showModal = false;
-    },
-    resetForm() {
-      for (let value in this.form) {
-        this.form[value] = null;
-      }
+      this.resetForm();
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.modal-dialog {
+  margin-top: 8%;
+}
 .modal {
   color: var(--darker);
 }
