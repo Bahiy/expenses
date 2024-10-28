@@ -1,18 +1,30 @@
 <template>
-  <div class="expense-list-item row">
-    <div class="col-2">12/08/2024</div>
-    <div class="col-8">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </div>
-    <div class="col money">
-      <div v-money-format="120" />
-    </div>
-    <div class="col text-center">
-      <router-link to="/">
-        <button class="icon btn-primary-outline" type="button">
-          <i class="fa fa-receipt" />
-        </button>
-      </router-link>
+  <div>
+    <div
+      :key="i"
+      v-for="(expense, i) in expenses"
+      class="expense-list-item row"
+    >
+      <div class="col-2" v-date-format="expense.createdAt"></div>
+      <div class="col-8">
+        {{ expense.description }}
+      </div>
+      <div class="col money">
+        <div v-money-format="expense.value" />
+      </div>
+      <div
+        v-if="expense.receipt === '/expenses-list'"
+        class="col text-center"
+      ></div>
+      <div v-else class="col text-center">
+        <a target="_blank" :href="expense.receipt">
+          <button class="icon btn-primary-outline" type="button">
+            <i class="fa fa-receipt" />
+          </button>
+        </a>
+      </div>
+      <!-- TODO - Criar botão de adicionar comprovante na listagem -->
+      <!-- TODO - Separar gastos por mês -> Ordenado descrescente-->
     </div>
   </div>
 </template>
@@ -25,7 +37,7 @@ export default {
     };
   },
   created() {
-    console.log(this.getData());
+    this.getData();
   },
   methods: {
     getData() {
@@ -45,6 +57,7 @@ export default {
 .expense-list-item {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-items: center;
   border-bottom: 1px solid var(--dark-medium);
   padding: 0.5rem 0;
@@ -56,7 +69,7 @@ export default {
     background-color: transparent;
     border: 1px solid;
     border-radius: 0.3rem;
-    color: var(--featured-dark);
+    color: var(--ligh-medium);
   }
 }
 </style>
