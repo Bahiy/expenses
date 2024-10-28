@@ -2,6 +2,7 @@
   <div id="app">
     <base-spinner />
     <layout-notification />
+
     <div class="container-fluid" v-if="isLogged">
       <div class="row">
         <div class="col-2 navigation-sidebar">

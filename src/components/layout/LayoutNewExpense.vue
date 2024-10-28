@@ -212,7 +212,8 @@ export default {
 
 <style scoped lang="scss">
 .modal-dialog {
-  margin-top: 8%;
+  margin-top: 5%;
+  margin-left: 25.8%;
 }
 .modal {
   color: var(--darker);

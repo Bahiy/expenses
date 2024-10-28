@@ -3,22 +3,24 @@
     <div class="row">
       <div class="col-6 home-box">
         <small>Você gastou:</small>
-        <p class="money">R$ 900,00</p>
-        <small>em 89 compras</small>
+        <p class="money" v-money-format="totals.totalsSpent"></p>
+        <small>em {{ totals.qtd }} compras</small>
       </div>
       <div class="col-6 home-box">
         <small>A média de gastos é de:</small>
-        <p class="money">R$ 99,80</p>
+        <p class="money" v-money-format="totals.average" />
       </div>
+    </div>
+    <div class="row">
       <div class="col-6 home-box">
         <small>O MAIOR gasto foi de:</small>
-        <p class="money">R$ 99,89</p>
-        <small>No dia 26/10/2024</small>
+        <p class="money" v-money-format="totals.biggest.value" />
+        <small v-date-format="totals.biggest.createdAt" />
       </div>
       <div class="col-6 home-box">
         <small>O MENOR gasto foi de:</small>
-        <p class="money">R$ 3,09</p>
-        <small>No dia 26/10/2024</small>
+        <p class="money" v-money-format="totals.lowest.value" />
+        <small v-date-format="totals.lowest.createdAt" />
       </div>
     </div>
   </div>
@@ -41,11 +43,22 @@ export default {
       const values = {
         totalsSpent: 0,
         average: 0,
+        qtd: 0,
         biggest: {},
         lowest: {},
       };
       if (exp.length) {
-        values.totalsSpent = exp.map(e => e.values);
+        values.totalsSpent = exp
+          .map((e) => e.value)
+          .reduce((acc, cur) => acc + cur, 0)
+          .toFixed(2);
+
+        values.qtd = exp.length;
+
+        values.average = (values.totalsSpent / values.qtd).toFixed(2);
+
+        values.biggest = exp.sort((a, b) => b.value - a.value)[0];
+        values.lowest = exp.sort((a, b) => a.value - b.value)[0];
       }
       return values;
     },
@@ -53,13 +66,13 @@ export default {
   methods: {
     getData() {
       const ref = this.$database.ref(`/${window.uid}`);
-      ref.on("value", (payload) => {
-        const values = payload.val();
+      ref.on("value", (snapshot) => {
+        const values = snapshot.val();
         if (values) {
           this.expenses = Object.keys(values).map((i) => values[i]);
         }
 
-        console.log(this.expenses);
+        console.log("Retorno das expenses no BD:", this.expenses);
       });
     },
   },
@@ -69,16 +82,27 @@ export default {
 <style lang="scss" scoped>
 .home {
   padding: 1rem;
-  .home-box {
-    font-size: 3rem;
-    width: 50%;
-    height: calc(50vh - 1rem);
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  .row {
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--dark-medium);
+    gap: 2rem;
+    margin: 1rem;
+  }
+  .home-box {
+    font-size: 3rem;
+    width: 40%;
+    height: calc(50vh - 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--featured-dark);
+    box-shadow: 0px 0px 0.5rem 0rem var(--featured-dark);
+    border-radius: 10px;
+
     // &:nth-child(2), :nth-child(4){
 
     //   border-left: none;

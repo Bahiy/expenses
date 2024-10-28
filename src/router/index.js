@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter, { RouterLink } from "vue-router";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
@@ -16,15 +16,15 @@ const router = new VueRouter({
         import(/* webpackChunkName: "home" */ "../pages/home/Home"),
     },
     {
-      path: "/lista-gastos",
-      name: "lista-gastos",
+      path: "/expenses-list",
+      name: "expenses-list",
       meta: {
         icon: "list-ul",
         title: "Lista Gastos",
       },
       component: () =>
         import(
-          /* webpackChunkName: "lista-gastos" */ "../pages/lista-gastos/ListaGastos"
+          /* webpackChunkName: "expenses-list" */ "../pages/expenses-list/ExpensesList"
         ),
     },
     {
