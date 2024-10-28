@@ -70,14 +70,14 @@
                     Adicionar comprovante
                   </button>
 
-                  <div class="mt-3" v-if="form.receipt">
+                  <div class="mt-3" v-if="form.receipt !== '/expenses-list'">
                     {{ form.receipt.name }}
                     <button
                       type="button"
                       class="btn badge-light"
                       @click="deleteReceipt()"
                     >
-                      <i v-if="form.receipt" class="fa fa-trash text-danger" />
+                      <i class="fa fa-trash text-danger" />
                     </button>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default {
     showModal: false,
     loading: false,
     form: {
-      receipt: null,
+      receipt: "/expenses-list",
       description: "",
       value: "",
     },
@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     deleteReceipt() {
-      this.form.receipt = "";
+      this.form.receipt = "/expenses-list";
     },
     handleChangeFile(event) {
       this.form.receipt = event.target.files[0];
@@ -198,9 +198,9 @@ export default {
       }
     },
     resetForm() {
-      for (let value in this.form) {
-        this.form[value] = "";
-      }
+      this.form.receipt = "/expenses-list";
+      this.form.description = "";
+      this.form.value = "";
     },
     closeModal() {
       this.showModal = false;
