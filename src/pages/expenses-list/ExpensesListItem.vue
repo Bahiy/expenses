@@ -12,11 +12,8 @@
       <div class="col money">
         <div v-money-format="expense.value" />
       </div>
-      <div
-        v-if="expense.receipt === '/expenses-list'"
-        class="col text-center"
-      ></div>
-      <div v-else class="col text-center">
+
+      <div v-if="expense.receipt" class="col text-center">
         <a target="_blank" :href="expense.receipt">
           <button class="icon btn-primary-outline" type="button">
             <i class="fa fa-receipt" />
