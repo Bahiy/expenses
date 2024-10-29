@@ -45,12 +45,6 @@
                     required
                     v-model="form.value"
                   ></money>
-                  <!-- <input
-                    type="text"
-                    class="form-control"
-                    required
-                    v-model="form.value"
-                  /> -->
                 </div>
                 <div
                   class="form-group mt-4 col-12 d-flex flex-column align-items-center"
@@ -70,7 +64,7 @@
                     Adicionar comprovante
                   </button>
 
-                  <div class="mt-3" v-if="form.receipt !== '/expenses-list'">
+                  <div class="mt-3" v-if="form.receipt">
                     {{ form.receipt.name }}
                     <button
                       type="button"
@@ -118,7 +112,7 @@ export default {
     showModal: false,
     loading: false,
     form: {
-      receipt: "/expenses-list",
+      receipt: null,
       description: "",
       value: "",
     },
@@ -137,7 +131,7 @@ export default {
   },
   methods: {
     deleteReceipt() {
-      this.form.receipt = "/expenses-list";
+      this.form.receipt = null;
     },
     handleChangeFile(event) {
       this.form.receipt = event.target.files[0];
@@ -198,7 +192,7 @@ export default {
       }
     },
     resetForm() {
-      this.form.receipt = "/expenses-list";
+      this.form.receipt = null;
       this.form.description = "";
       this.form.value = "";
     },
