@@ -86,9 +86,10 @@ export default {
     text-align: center;
     &:hover {
       background-color: var(--featured);
+      color: var(--featured-dark);
     }
     .value-label {
-      color: var(--darker);
+      color: var(--featured);
       font-size: 0.8rem;
     }
   }

@@ -1,11 +1,12 @@
 <template>
-  <form @submit.prevent="doLogin()" class="form-login">
+  <form @submit.prevent="doRegister" class="form-login">
     <div class="card">
       <div class="card-header text-center">
         <h1 class="mb-0">Expenses</h1>
       </div>
       <div class="card-body">
         <div class="inputs-login">
+          <h1>REGISTRO</h1>
           <div class="form-group">
             <input
               type="email"
@@ -26,19 +27,26 @@
               required
             />
           </div>
+          <div class="form-group">
+            <input
+              required
+              type="password"
+              v-model="registrationPassword"
+              placeholder="Repita sua senha"
+              class="form-control"
+            />
+          </div>
         </div>
         <button class="btn btn-primary w-100" :disabled="loading">
           <template v-if="loading">
-            Entrando...
+            Registrando...
             <i class="fa fa-spinner fa-spin"></i>
           </template>
           <template v-else>
-            Entrar
+            Registrar
             <i class="fa fa-sign-in"></i>
           </template>
         </button>
-        Não tem conta?
-        <router-link to="/register" class="link mt-4">Clique aqui para Registrar</router-link>
       </div>
     </div>
   </form>
@@ -46,19 +54,21 @@
 
 <script>
 export default {
+  name: "Register",
   data() {
     return {
       email: "",
       password: "",
+      registrationPassword: "",
       loading: false,
     };
   },
   methods: {
-    async doLogin() {
+    async doRegister() {
       this.loading = true;
       const { email, password } = this;
       try {
-        const res = await this.$auth.signInWithEmailAndPassword(
+        const res = await this.$auth.createUserWithEmailAndPassword(
           email,
           password
         );

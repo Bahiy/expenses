@@ -36,11 +36,18 @@ const router = new VueRouter({
       component: () =>
         import(/* webpackChunkName: "login" */ "../pages/login/Login"),
     },
+    {
+      name: "register",
+      path: "/register",
+      meta: { title: "Register" },
+      component: () =>
+        import(/* webpackChunkName: "register" */ "../pages/register/Register"),
+    },
   ],
 });
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} - Expenses`;
-  if (!window.uid && to.name !== "login") {
+  if (!window.uid && to.name !== "login" && to.name !== "register") {
     next({ name: "login" });
   } else {
     next();
