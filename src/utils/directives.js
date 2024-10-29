@@ -12,3 +12,6 @@ Vue.directive("money-format", (element, { value }) => {
 Vue.directive('date-format', (element, { value }) => {
   element.innerHTML = moment(value).format('DD/MM/YYYY [às] HH:mm:ss')
 })
+Vue.directive('date-format-only', (element, { value }) => {
+  element.innerHTML = moment(value).format('DD/MM/YYYY')
+})

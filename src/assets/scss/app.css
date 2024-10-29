@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+@import "../../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+:root {
+  --dark: #252422 !important;
+  --darker: #403D39 !important;
+  --dark-medium: #333 !important;
+  --dark-low: #666 !important;
+  --light-low: #999 !important;
+  --light-medium: #ddd !important;
+  --ligther: #CCC5B9 !important;
+  --light: #FFFCF2 !important;
+  --featured: #EB5E28 !important;
+  --featured-dark: #252422 !important;
+}
+
+* {
+  font-family: "Avenir", "Poppins", sans-serif;
+}
+
+a {
+  color: inherit !important;
+}
+
+.col {
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.btn-primary {
+  background-color: #EB5E28 !important;
+  border-color: #252422 !important;
+}
+.btn-primary:hover {
+  background-color: #252422 !important;
+}
+
+.btn-outline-primary {
+  color: #EB5E28 !important;
+  border-color: #EB5E28 !important;
+}
+.btn-outline-primary:hover {
+  color: #403D39 !important;
+  background-color: #EB5E28 !important;
+}/*# sourceMappingURL=app.css.map */

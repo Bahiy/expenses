@@ -1,18 +1,17 @@
 <template>
-  <nav class="nav flex-column gap-2 justify-content-between">
+  <nav class="nav flex-column justify-content-between">
     <div>
       <router-link
-        class="nav-link"
         exact
-        exact-active-class="active"
-        v-for="(router, i) in routerLinks"
         :key="i"
+        class="nav-link"
+        exact-active-class="active"
         :to="{ name: router.name }"
+        v-for="(router, i) in routerLinks"
       >
-        <i class="fa" :class="`fa-${router.meta.icon}`" />
+        <i class="fa" :class="`fa-${router.meta.icon}`"></i>
         {{ router.meta.title }}
       </router-link>
-
       <hr />
 
       <layout-new-expense />
@@ -39,19 +38,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+hr{
+  margin: 2rem 0;
+}
 .nav {
   margin-left: -1rem;
   width: calc(100% + 1.7rem);
   height: calc(100vh - 49px);
   .nav-link {
-    color: var(--white);
+    color: var(--light);
     transition: 0.5s;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
     &.active {
-      color: var(--featured);
-      background-color: transparent;
+      color: var(--featured) !important;
+      background-color: transparent !important;
     }
     &:hover {
       color: var(--dark);

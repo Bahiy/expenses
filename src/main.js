@@ -4,11 +4,8 @@ import router from "./router";
 import "./assets/scss/app.scss";
 import FirebasePlugin from "./firebase/index"; // Caminho para o seu plugin
 import money from "v-money";
-import './utils/directives'
+import "./utils/directives";
 
-Vue.config.devtools = true;
-
-Vue.config.productionTip = false;
 Vue.use(FirebasePlugin);
 Vue.use(money, {
   decimal: ",",
@@ -16,6 +13,7 @@ Vue.use(money, {
   prefix: "R$ ",
   precision: 2,
 });
+Vue.config.productionTip = false;
 
 new Vue({
   router,

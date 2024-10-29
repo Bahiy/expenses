@@ -24,7 +24,7 @@ export default {
   cursor: pointer;
   color: var(--light);
   &:hover {
-    color: #ac2121;
+    background-color: #ac2121;
   }
 }
 </style>

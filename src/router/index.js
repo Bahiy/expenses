@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+  mode: "history",
   routes: [
     {
       path: "/",
@@ -16,23 +17,22 @@ const router = new VueRouter({
         import(/* webpackChunkName: "home" */ "../pages/home/Home"),
     },
     {
-      path: "/expenses-list",
       name: "expenses-list",
+      path: "/expenses-list",
       meta: {
         icon: "list-ul",
         title: "Lista Gastos",
       },
       component: () =>
         import(
-          /* webpackChunkName: "expenses-list" */ "../pages/expenses-list/ExpensesList"
+          /* webpackChunkName: "expenses-list" */
+          "../pages/expenses-list/ExpensesList"
         ),
     },
     {
-      path: "/login",
       name: "login",
-      meta: {
-        title: "Login",
-      },
+      path: "/login",
+      meta: { title: "Login" },
       component: () =>
         import(/* webpackChunkName: "login" */ "../pages/login/Login"),
     },
