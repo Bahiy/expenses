@@ -96,5 +96,12 @@ export default {
 .container {
   padding: 0rem 1rem;
   font-size: 1.25rem;
+  overflow: hidden auto;
+  height: calc(100vh - 4.7rem);
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 </style>
