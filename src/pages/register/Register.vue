@@ -1,30 +1,28 @@
 <template>
-  <form @submit.prevent="doRegister" class="form-login">
+  <form @submit.prevent="register" class="form-login">
     <div class="card">
       <div class="card-header text-center">
-        <h1 class="mb-0">Expenses</h1>
+        <h1 class="mb-0 title">Expenses</h1>
       </div>
       <div class="card-body">
-        <div class="inputs-login">
-          <h1>REGISTRO</h1>
+        <h2 class="text-center">Crie sua conta!</h2>
+        <div class="form-group">
+          <input
+            required
+            type="email"
+            v-model="email"
+            placeholder="Seu endereço de e-mail"
+            class="form-control"
+          />
+        </div>
+        <div class="password">
           <div class="form-group">
             <input
-              type="email"
-              v-model="email"
-              autocomplete="email"
-              class="form-control"
-              placeholder="E-mail"
               required
-            />
-          </div>
-          <div class="form-group">
-            <input
               type="password"
               v-model="password"
-              autocomplete="current-password"
+              placeholder="Sua senha"
               class="form-control"
-              placeholder="Senha"
-              required
             />
           </div>
           <div class="form-group">
@@ -43,10 +41,17 @@
             <i class="fa fa-spinner fa-spin"></i>
           </template>
           <template v-else>
+            <i class="fas fa-user-plus"></i>
             Registrar
-            <i class="fa fa-sign-in"></i>
           </template>
         </button>
+        <div class="text">
+          <p>
+            Já possui conta?
+
+            <router-link class="login" to="/login"> Fazer Login</router-link>
+          </p>
+        </div>
       </div>
     </div>
   </form>
@@ -55,56 +60,60 @@
 <script>
 export default {
   name: "Register",
-  data() {
+  data: () => {
     return {
+      loading: false,
       email: "",
       password: "",
       registrationPassword: "",
-      loading: false,
     };
   },
   methods: {
-    async doRegister() {
+    async register() {
       this.loading = true;
-      const { email, password } = this;
+      const { email, password, registrationPassword } = this;
+
       try {
-        const res = await this.$auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        window.uid = res.user.uid;
+        if (password === registrationPassword) {
+          const res = await this.$firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password);
 
-        this.$router.push({ name: "home" }).catch(() => {});
+          window.uid = res.user.uid;
 
-        console.log(res);
+          this.$router.push({ name: "home" }).catch(() => {});
+        } else {
+          let message = "Senhas diferentes, por favor, tente de novo.";
+          this.$root.$emit("Notification::show", {
+            message,
+            type: "danger",
+          });
+          this.password = ""; // Limpa o input de senha
+          this.registrationPassword = ""; // Limpa o input de senha
+        }
       } catch (err) {
         let message = "";
-        switch (err.code) {
-          case "auth/too-many-requests":
-            message =
-              "Sua conta foi bloqueada devido a múltiplas tentativas de login incorretas. \n\nTente novamente mais tarde.";
-            break;
 
-          default:
-            message =
-              "Credenciais inválidas. \n\nSe você esqueceu sua senha, clique em 'Esqueci a senha' para redefini-la.";
+        switch (err.code) {
+          case "auth/email-already-in-use":
+            message = "O endereço de e-mail já está em uso por outra conta.";
+            this.email = ""; // Limpa o input de E-mail
             break;
+          case "auth/wrong-password":
+            message = "Senha inválida";
+            break;
+          default:
+            message = "Não foi possível criar a conta, tente novamente";
         }
+
         this.$root.$emit("Notification::show", {
+          message,
           type: "danger",
-          message: message,
         });
-        console.log(err);
       }
+
       this.loading = false;
     },
-  },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (window.uid) {
-        vm.$router.push({ name: home });
-      }
-    });
   },
 };
 </script>
@@ -115,24 +124,44 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
   h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.3em;
   }
   .card {
-    width: 25%;
+    width: 30%;
     color: var(--darker);
+
+    .title {
+      font-size: 2rem;
+      color: var(--featured);
+      font-weight: 600;
+    }
   }
   .card-body {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }
-  .inputs-login {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.5rem;
+    .password {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .text {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+      .login {
+        color: var(--featured) !important;
+      }
+    }
   }
 }
+
 .link {
   color: var(--featured);
   text-decoration: none;

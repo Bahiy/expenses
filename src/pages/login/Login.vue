@@ -2,7 +2,7 @@
   <form @submit.prevent="doLogin()" class="form-login">
     <div class="card">
       <div class="card-header text-center">
-        <h1 class="mb-0">Expenses</h1>
+        <h1 class="mb-0 title">Expenses</h1>
       </div>
       <div class="card-body">
         <div class="inputs-login">
@@ -37,8 +37,12 @@
             <i class="fa fa-sign-in"></i>
           </template>
         </button>
-        Não tem conta?
-        <router-link to="/register" class="link mt-4">Clique aqui para Registrar</router-link>
+        <div class="footer">
+          Não tem conta?
+          <router-link to="/register" class="link"
+            >Clique aqui para Registrar</router-link
+          >
+        </div>
       </div>
     </div>
   </form>
@@ -105,9 +109,16 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  h1 {
-    font-size: 1.5rem;
+  .card {
+    border: 1px solid var(--dark);
+    box-shadow: var(--featured-dark) 0px 1rem 3rem 0px;
   }
+  .title {
+    font-size: 2rem;
+    color: var(--featured);
+    font-weight: 600;
+  }
+
   .card {
     width: 25%;
     color: var(--darker);
@@ -122,13 +133,20 @@ export default {
     flex-direction: column;
     gap: 0.3rem;
   }
-}
-.link {
-  color: var(--featured);
-  text-decoration: none;
-  &:hover {
-    color: var(--featured-dark);
-    text-decoration: underline;
+
+  .footer {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .link {
+      color: var(--featured) !important;
+      text-decoration: none;
+      &:hover {
+        color: var(--featured-dark) !important;
+        text-decoration: underline;
+      }
+    }
   }
 }
 </style>

@@ -27,7 +27,7 @@ a {
   background-color: $featured;
   border-color: $featured-dark;
   &:hover {
-    background-color: $featured-dark;
+    background-color: var(--dark-low) !important;
   }
 }
 
