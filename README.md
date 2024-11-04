@@ -1,17 +1,9 @@
 # Expenses 💰💵💴💶💷💰
 
-O Expenses é um projeto que desenvolvi em meu canal do YouTube a fim de disseminar conhecimento.
+O Expenses é um projeto que desenvolvi a fim de aprimorar meus conhecimentos.
 Se trata de uma SPA (Single Page Application) utilizando o Vue.js e o Firebase para inserir gastos
 pessoais e ter um controle dos mesmos. Os dados são salvos no realtime database do Firebase e utilizo
 tambem o storage para salvar a imagem do comprovante caso o usuário queira inserí-la.
-
-## Conteúdos
-
-- [Tecnologias principais](#tecnologias-principais)
-- [Rodando o projeto local](#rodando-o-projeto-local)
-- [Compilar arquivos minificados para produção](#compilar-arquivos-minificados-para-produção)
-- [Fazer o deploy para o firebase](#fazer-o-deploy-para-o-firebase)
-- [Playlist passo a passo da construção do projeto](#caso-desejar-o-link-para-os-vídeos-estão-a-seguir)
 
 ## Tecnologias principais
 
